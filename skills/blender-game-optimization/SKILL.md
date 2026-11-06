@@ -4,7 +4,7 @@ description: Optimize Blender assets for real-time engines - triangle/material/t
 license: MIT
 metadata:
   author: blender-agent-skills
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
 # Game Optimization

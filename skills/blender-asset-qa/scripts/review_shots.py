@@ -130,7 +130,8 @@ def run(objects=None, out="", views=None, mode="solid", res=512, frames=None, fr
             bpy.data.images.remove(im)
         cols = 2 if len(imgs) <= 4 else 3 if len(imgs) <= 9 else math.ceil(math.sqrt(len(imgs)))
         rows = math.ceil(len(imgs) / cols)
-        sheet = np.ones((rows * res, cols * res, 4), dtype=np.float32)
+        sheet = np.empty((rows * res, cols * res, 4), dtype=np.float32)
+        sheet[:] = imgs[0][0, 0]  # empty tiles take the render background, not white
         for i, a in enumerate(imgs):
             rr, cc = rows - 1 - i // cols, i % cols  # pixel rows are bottom-up
             sheet[rr * res:(rr + 1) * res, cc * res:(cc + 1) * res] = a

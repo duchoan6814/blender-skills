@@ -4,7 +4,7 @@ description: Game environments in Blender 5.2 - terrain from noise or heightmaps
 license: MIT
 metadata:
   author: blender-agent-skills
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
 # Environment kits

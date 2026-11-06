@@ -4,7 +4,7 @@ description: Hard-surface and prop modeling in Blender 5.2 - blockout-to-detail 
 license: MIT
 metadata:
   author: blender-agent-skills
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
 # Hard-Surface Modeling

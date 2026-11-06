@@ -5,7 +5,7 @@ The skills target the official Blender MCP server: Blender runs with the MCP add
 ## Tools
 | Need | Tool | Notes |
 |---|---|---|
-| Run bpy in the open Blender | `execute_blender_code(code)` | Return data by assigning a JSON-serialisable dict to `result`; the reply is `{"status", "result", "stdout"}` (`print` goes to `stdout`). Each call gets a fresh namespace. Runs in the user's session: changes are live and there is no undo step for the agent, so save or back up first. |
+| Run bpy in the open Blender | `execute_blender_code(code)` | Return data by assigning a JSON-serialisable **dict** to `result` (a list is rejected: `result = {"items": [...]}`); the reply is `{"status", "result", "stdout"}` (`print` goes to `stdout`). Each call gets a fresh namespace. Runs in the user's session: changes are live and there is no undo step for the agent, so save or back up first. |
 | Run bpy on a file in a background Blender | `execute_blender_code_for_cli(blend_file, code)` | Needs `BLENDER_PATH` pointing at the Blender executable (macOS: `/Applications/Blender.app/Contents/MacOS/Blender`). Same `result` rule. Without it, use `blender-core/scripts/run_in_blender.py`. |
 | Scene overview | `get_objects_summary` | Collections, objects, parents, visibility. Read this before touching anything. |
 | One object in detail | `get_object_detail_summary` | Transforms, modifiers, materials, data. |

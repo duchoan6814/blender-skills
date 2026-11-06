@@ -144,6 +144,17 @@ def run(preset="gltf", objects=None, collection=None, out="", batch=False, no_an
         jobs.append((out, obs, None))
     files = []
     for path, members, root in jobs:
+        # hidden objects can't be selected and would be skipped silently: unhide them for the export
+        hidden = {m: (m.hide_get(), m.hide_viewport, m.hide_select) for m in members
+                  if m.hide_get() or m.hide_viewport or m.hide_select}
+        for m in hidden:
+            m.hide_viewport = m.hide_select = False
+            m.hide_set(False)
+        lost = [m.name for m in members if not m.visible_get()]
+        if hidden:
+            warn.append(f"temporarily unhid for export: {sorted(m.name for m in hidden)}")
+        if lost:
+            warn.append(f"not exported (excluded/hidden collection): {lost}")
         bx.select_only(members, active=members[0])
         loc = None
         if root is not None:
@@ -154,9 +165,12 @@ def run(preset="gltf", objects=None, collection=None, out="", batch=False, no_an
         finally:
             if loc is not None:
                 root.location = loc
+            for m, (h, hv, hs) in hidden.items():
+                m.hide_viewport, m.hide_select = hv, hs
+                m.hide_set(h)
         rec = {"file": path, "ok": res == {"FINISHED"} and os.path.exists(path),
                "kb": round(os.path.getsize(path) / 1024, 1) if os.path.exists(path) else 0,
-               "objects": [m.name for m in members]}
+               "objects": [m.name for m in members if m.name not in lost]}
         if path.endswith(".glb") and rec["ok"]:
             rec["summary"] = glb_summary(path)
         files.append(rec)

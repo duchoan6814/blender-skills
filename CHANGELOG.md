@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.3.2] - 2026-11-06
+- `export_asset.py`: hidden objects in the selection are unhidden for the export and re-hidden (they were silently skipped); objects in excluded collections are reported.
+- `review_shots.py`: empty sheet tiles use the render background instead of white.
+- Docs: the official MCP `result` must be a dict.
+
 ## [1.3.1] - 2026-11-06
 - Verified live against the official Blender MCP (Blender 5.2.3): `print` arrives in the reply's `stdout`, each call has a fresh namespace. Stronger x-ray in `review_shots.py`.
 

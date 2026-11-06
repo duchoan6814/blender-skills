@@ -5,7 +5,7 @@ license: MIT
 compatibility: Blender 5.2 LTS or newer. Optional official Blender MCP server (Blender Lab add-on) for live sessions.
 metadata:
   author: blender-agent-skills
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
 # Blender Core (5.2 LTS+)
@@ -42,7 +42,7 @@ metadata:
 | End-to-end playbooks (prop, character, Roblox, product shot) | `blender-workflow-recipes` |
 
 ## Execute
-**Live (official Blender MCP, `execute_blender_code`)**: work in small steps. Return data by assigning a JSON-serialisable dict to **`result`**; the reply is `{"status", "result", "stdout"}`, so `print()` lands in `stdout` (use it for short logs, not data). To call a skill script, import it:
+**Live (official Blender MCP, `execute_blender_code`)**: work in small steps. Return data by assigning a JSON-serialisable **dict** to **`result`** (a list or other type is rejected: wrap it, `result = {"items": [...]}`); the reply is `{"status", "result", "stdout"}`, so `print()` lands in `stdout` (use it for short logs, not data). To call a skill script, import it:
 ```python
 import sys, importlib; sys.path.insert(0, r"<skills_dir>/blender-asset-qa/scripts")
 import qa_check; importlib.reload(qa_check); result = qa_check.run(objects=["Chair"])

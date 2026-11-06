@@ -116,6 +116,12 @@ def test_review_shots_frames_and_xray_restore_scene():
     r = skill_module("blender-asset-qa", "review_shots").run(out=str(TMP / "qa_t.png"), res=96, mode="texture",
                                                              frames=[5], views=["front", "top"])
     assert r["order"] == ["f5_front", "f5_top"] and sc.frame_current == 7
+    import numpy as np
+    im = bpy.data.images.load(str(TMP / "qa_f.png"), check_existing=False)  # 3 tiles in a 2x2 grid
+    px = np.empty(len(im.pixels), np.float32)
+    im.pixels.foreach_get(px)
+    bpy.data.images.remove(im)
+    assert px.reshape(-1, 4)[:, :3].min(axis=1).max() < 0.99  # no white filler tiles
     assert "QA_Cam" not in bpy.data.objects and len(bpy.data.objects) == 1
 
 

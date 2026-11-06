@@ -4,7 +4,7 @@ description: Weather effects in Blender 5.2 - looping Geometry Nodes rain, snow,
 license: MIT
 metadata:
   author: blender-agent-skills
-  version: "1.3.1"
+  version: "1.3.2"
 ---
 
 # Weather FX

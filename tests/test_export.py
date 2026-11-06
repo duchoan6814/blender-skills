@@ -46,3 +46,16 @@ def test_batch_export_at_origin():
     names = sorted(os.path.basename(f["file"]) for f in r["files"])
     assert names == ["SM_A.glb", "SM_B.glb"]
     assert tuple(bpy.data.objects["SM_A"].location) == (5, 0, 0)  # restored
+
+
+def test_hidden_children_are_exported_and_rehidden():
+    body = fx.cube("Body")
+    lod = fx.cube("Body_LOD1", location=(3, 0, 0))
+    lod.parent = body
+    lod.hide_set(True)
+    r = skill_module("blender-export-pipelines", "export_asset").run(
+        preset="godot", objects=["Body"], out=str(TMP / "hidden.glb"), no_anim=True)
+    f = r["files"][0]
+    assert f["ok"] and f["summary"]["meshes"] == 2, f
+    assert any("temporarily unhid" in w for w in r["warnings"]), r["warnings"]
+    assert lod.hide_get() and not body.hide_get()
